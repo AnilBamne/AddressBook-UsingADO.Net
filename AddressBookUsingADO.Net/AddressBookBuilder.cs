@@ -79,7 +79,13 @@ namespace AddressBookUsingADO.Net
                 this.connection.Close();
             }
         }
-        public void UpdateExistingContatc(AddressBookModel addressBookModel,String firstName)
+
+        /// <summary>
+        /// Ability to edit existing contact
+        /// </summary>
+        /// <param name="addressBookModel"></param>
+        /// <param name="firstName"></param>
+        public void EditExistingContatc(AddressBookModel addressBookModel,String firstName)
         {
             try
             {
@@ -108,6 +114,44 @@ namespace AddressBookUsingADO.Net
                     if (count != 0)
                     {
                         Console.WriteLine("Contact Updated successfully");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data added");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// Ability to delete existing contact by persons name
+        /// </summary>
+        /// <param name="addressBookModel"> object of AddressBookModel</param>
+        public void DeleteExistingContatc(AddressBookModel addressBookModel)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    string query = @"Delete From AddressBookTable where Firstname=@FirstName";
+
+                    SqlCommand sqlCommand = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    sqlCommand.Parameters.AddWithValue("@FirstName", addressBookModel.FirstName);
+
+                    var count = sqlCommand.ExecuteNonQuery();
+                    this.connection.Close();
+                    if (count != 0)
+                    {
+                        Console.WriteLine("Contact deleted successfully");
                     }
                     else
                     {

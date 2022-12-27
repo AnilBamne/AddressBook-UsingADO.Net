@@ -12,7 +12,7 @@ namespace AddressBookUsingADO.Net
             while (true)
             {
                 AddressBookBuilder builder = new AddressBookBuilder();
-                Console.WriteLine("enter option\n1 Check connection\n2 AddNewContactToAddressBook DB\n3 UpdateExistingContatc\n0  exit");
+                Console.WriteLine("enter option\n1 Check connection\n2 AddNewContactToAddressBook DB\n3 EditExistingContatc\n4 DeleteExistingContatc\n0  exit");
                 int option=int.Parse(Console.ReadLine());
                 switch (option)
                 {
@@ -36,8 +36,7 @@ namespace AddressBookUsingADO.Net
                         addressBookBuilder.AddNewContactToAddressBook(addressBookModel);
                         break;
                     case 3:
-                        //uc3 Update existing contact
-                        
+                        //uc3 Edit existing contact
                         addressBookModel.FirstName = "Vijay";
                         addressBookModel.LastName = "Deverkonda";
                         addressBookModel.Address = "Hyd";
@@ -48,11 +47,15 @@ namespace AddressBookUsingADO.Net
                         addressBookModel.Email = "VijayD@gmail.com";
                         addressBookModel.AddressBookType = "Actor";
                         addressBookModel.AddressBookName = "celebs";
-                        addressBookBuilder.UpdateExistingContatc(addressBookModel,"Vijay");
+                        addressBookBuilder.EditExistingContatc(addressBookModel,"Vijay");
                         break;
                     case 4:
+                        //uc4 delete contact fron BD
+                        addressBookModel.FirstName = "Vijay";
+                        addressBookBuilder.DeleteExistingContatc(addressBookModel);
                         break;
                     case 5:
+                        
                         break;
                     case 0:
                         Environment.Exit(0);
