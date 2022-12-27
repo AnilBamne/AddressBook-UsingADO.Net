@@ -58,20 +58,64 @@ namespace AddressBookUsingADO.Net
                     sqlCommand.Parameters.AddWithValue("@AddressBookName", addressBookModel.AddressBookName);
                     sqlCommand.Parameters.AddWithValue("@AddressBookType", addressBookModel.AddressBookType);
                     
-                    sqlCommand.ExecuteNonQuery();
-                    Console.WriteLine("Contact added successfully");
+                    var count=sqlCommand.ExecuteNonQuery();
                     this.connection.Close();
-                    //if (count !=0)
-                    //{
-                    //    Console.WriteLine("Contact added successfully");
-                    //}
-                    //else
-                    //{
-                    //    Console.WriteLine("No data added");
-                    //}
+                    if (count != 0)
+                    {
+                        Console.WriteLine("Contact added successfully");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data added");
+                    }
                 }
             }
             catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+        public void UpdateExistingContatc(AddressBookModel addressBookModel,String firstName)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    string query = @"Update AddressBookTable Set LastName=@LastName,Address=@Address,City=@City,
+                    State=@State,Zip=@Zip,PhoneNo=@PhoneNo,Email=@Email,AddressBookName=@AddressBookName,
+                    AddressBookType=@AddressBookType  where Firstname=@FirstName";
+
+                    SqlCommand sqlCommand = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    
+                    sqlCommand.Parameters.AddWithValue("@FirstName", addressBookModel.FirstName);
+                    sqlCommand.Parameters.AddWithValue("@LastName", addressBookModel.LastName);
+                    sqlCommand.Parameters.AddWithValue("@Address", addressBookModel.Address);
+                    sqlCommand.Parameters.AddWithValue("@City", addressBookModel.City);
+                    sqlCommand.Parameters.AddWithValue("@State", addressBookModel.State);
+                    sqlCommand.Parameters.AddWithValue("@Zip", addressBookModel.Zip);
+                    sqlCommand.Parameters.AddWithValue("@PhoneNo", addressBookModel.PhoneNo);
+                    sqlCommand.Parameters.AddWithValue("@Email", addressBookModel.Email);
+                    sqlCommand.Parameters.AddWithValue("@AddressBookName", addressBookModel.AddressBookName);
+                    sqlCommand.Parameters.AddWithValue("@AddressBookType", addressBookModel.AddressBookType);
+
+                    var count=sqlCommand.ExecuteNonQuery();
+                    this.connection.Close();
+                    if (count != 0)
+                    {
+                        Console.WriteLine("Contact Updated successfully");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data added");
+                    }
+                }
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }

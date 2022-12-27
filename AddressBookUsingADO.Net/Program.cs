@@ -8,10 +8,11 @@ namespace AddressBookUsingADO.Net
         {
             Console.WriteLine("Welcome to Address book system - Using ADO.Net ");
             AddressBookBuilder addressBookBuilder = new AddressBookBuilder();
+            AddressBookModel addressBookModel = new AddressBookModel();
             while (true)
             {
                 AddressBookBuilder builder = new AddressBookBuilder();
-                Console.WriteLine("enter option\n1 Check connection\n2 AddNewContactToAddressBook DB\n0  exit");
+                Console.WriteLine("enter option\n1 Check connection\n2 AddNewContactToAddressBook DB\n3 UpdateExistingContatc\n0  exit");
                 int option=int.Parse(Console.ReadLine());
                 switch (option)
                 {
@@ -21,7 +22,7 @@ namespace AddressBookUsingADO.Net
                         break;
                     case 2:
                         //uc2 Add new contact to Address book
-                        AddressBookModel addressBookModel = new AddressBookModel();
+                        
                         addressBookModel.FirstName = "Vijay";
                         addressBookModel.LastName = "Deverkonda";
                         addressBookModel.Address = "Hyd";
@@ -35,6 +36,19 @@ namespace AddressBookUsingADO.Net
                         addressBookBuilder.AddNewContactToAddressBook(addressBookModel);
                         break;
                     case 3:
+                        //uc3 Update existing contact
+                        
+                        addressBookModel.FirstName = "Vijay";
+                        addressBookModel.LastName = "Deverkonda";
+                        addressBookModel.Address = "Hyd";
+                        addressBookModel.City = "Hydrabad";
+                        addressBookModel.State = "TS";
+                        addressBookModel.Zip = 234234;
+                        addressBookModel.PhoneNo = 85629485;
+                        addressBookModel.Email = "VijayD@gmail.com";
+                        addressBookModel.AddressBookType = "Actor";
+                        addressBookModel.AddressBookName = "celebs";
+                        addressBookBuilder.UpdateExistingContatc(addressBookModel,"Vijay");
                         break;
                     case 4:
                         break;
