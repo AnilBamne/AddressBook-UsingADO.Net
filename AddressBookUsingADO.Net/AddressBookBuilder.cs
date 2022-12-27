@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,53 @@ namespace AddressBookUsingADO.Net
             catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// uc2 : Adding new contact to address book DataBase
+        /// </summary>
+        /// <param name="addressBookModel"></param>
+        public void AddNewContactToAddressBook(AddressBookModel addressBookModel)
+        {
+            try
+            {
+                using (this.connection)
+                {
+                    SqlCommand sqlCommand = new SqlCommand("spAddNewContact", this.connection);
+                    this.connection.Open();
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue("@FirstName", addressBookModel.FirstName);
+                    sqlCommand.Parameters.AddWithValue("@LastName", addressBookModel.LastName);
+                    sqlCommand.Parameters.AddWithValue("@Address", addressBookModel.Address);
+                    sqlCommand.Parameters.AddWithValue("@City", addressBookModel.City);
+                    sqlCommand.Parameters.AddWithValue("@State", addressBookModel.State);
+                    sqlCommand.Parameters.AddWithValue("@Zip", addressBookModel.Zip);
+                    sqlCommand.Parameters.AddWithValue("@PhoneNo", addressBookModel.PhoneNo);
+                    sqlCommand.Parameters.AddWithValue("@Email", addressBookModel.Email);
+                    sqlCommand.Parameters.AddWithValue("@AddressBookName", addressBookModel.AddressBookName);
+                    sqlCommand.Parameters.AddWithValue("@AddressBookType", addressBookModel.AddressBookType);
+                    
+                    sqlCommand.ExecuteNonQuery();
+                    Console.WriteLine("Contact added successfully");
+                    this.connection.Close();
+                    //if (count !=0)
+                    //{
+                    //    Console.WriteLine("Contact added successfully");
+                    //}
+                    //else
+                    //{
+                    //    Console.WriteLine("No data added");
+                    //}
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
             finally
             {
