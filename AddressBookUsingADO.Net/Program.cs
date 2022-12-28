@@ -12,7 +12,7 @@ namespace AddressBookUsingADO.Net
             while (true)
             {
                 AddressBookBuilder builder = new AddressBookBuilder();
-                Console.WriteLine("enter option\n1 Check connection\n2 AddNewContactToAddressBook DB\n3 EditExistingContatc\n4 DeleteExistingContatc\n0  exit");
+                Console.WriteLine("enter option\n1 Check connection\n2 AddNewContactToAddressBook DB\n3 EditExistingContatc\n4 DeleteExistingContatc\n5 ShowAllDataInDataBase\n0  exit");
                 int option=int.Parse(Console.ReadLine());
                 switch (option)
                 {
@@ -55,7 +55,8 @@ namespace AddressBookUsingADO.Net
                         addressBookBuilder.DeleteExistingContatc(addressBookModel);
                         break;
                     case 5:
-                        
+                        //ShowAllDataInDataBase
+                        addressBookBuilder.GetAllDataFromDataBase();
                         break;
                     case 0:
                         Environment.Exit(0);

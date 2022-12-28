@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Loader;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -156,6 +157,55 @@ namespace AddressBookUsingADO.Net
                     else
                     {
                         Console.WriteLine("No data added");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                this.connection.Close();
+            }
+        }
+
+        /// <summary>
+        /// Ability to show all data
+        /// </summary>
+        /// <param name="addressBookModel"> object of AddressBookModel</param>
+        public void ShowAllDataInDataBase()
+        {
+            try
+            {
+                AddressBookModel addressBookModel  =new AddressBookModel();
+                using (this.connection)
+                {
+                    string query = @"Select * From AddressBookTable;";
+
+                    SqlCommand sqlCommand = new SqlCommand(query, this.connection);
+                    this.connection.Open();
+                    SqlDataReader sqlDataReader=sqlCommand.ExecuteReader();
+                    if (sqlDataReader.HasRows)
+                    {
+                        while(sqlDataReader.Read())
+                        {
+                            addressBookModel.FirstName=sqlDataReader.GetString(0);
+                            addressBookModel.LastName=sqlDataReader.GetString(1);
+                            addressBookModel.Address=sqlDataReader.GetString(2);
+                            addressBookModel.City=sqlDataReader.GetString(3);
+                            addressBookModel.State = sqlDataReader.GetString(4);
+                            addressBookModel.Zip = sqlDataReader.GetInt32(5);
+                            addressBookModel.PhoneNo = sqlDataReader.GetInt32(6);
+                            addressBookModel.Email = sqlDataReader.GetString(7);
+                            addressBookModel.AddressBookType = sqlDataReader.GetString(8);
+                            addressBookModel.AddressBookName = sqlDataReader.GetString(9);
+                            Console.WriteLine("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}", addressBookModel.FirstName,addressBookModel.LastName,addressBookModel.Address,addressBookModel.City,addressBookModel.State,addressBookModel.Zip,addressBookModel.PhoneNo,addressBookModel.Email,addressBookModel.AddressBookName,addressBookModel.AddressBookType);
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No data found");
                     }
                 }
             }
